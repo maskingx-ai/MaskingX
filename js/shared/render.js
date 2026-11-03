@@ -38,7 +38,7 @@ function pluginIcon() {
     return wrapper;
 }
 
-function appRows(downloads, channel, locale, pluginLabel) {
+function appRows(downloads, channel, locale, pluginLabel, appShellLabel) {
     return downloads.apps.map((app) => ({
         key: app.id,
         name: app.name,
@@ -46,11 +46,18 @@ function appRows(downloads, channel, locale, pluginLabel) {
         description: app.description,
         url: channel ? channel.url : app.url,
         kind: "app",
-        includedPlugins: (app.plugins || []).map((plugin) => ({
-            key: `${plugin.id}:${plugin.version}`,
-            label: pluginLabel(plugin.id, plugin.id, locale),
-            version: plugin.version,
-        })),
+        includedModules: [
+            {
+                key: `${app.id}:app-shell`,
+                label: appShellLabel,
+                version: app.version,
+            },
+            ...(app.plugins || []).map((plugin) => ({
+                key: `${plugin.id}:${plugin.version}`,
+                label: pluginLabel(plugin.id, plugin.id, locale),
+                version: plugin.version,
+            })),
+        ],
     }));
 }
 
@@ -62,7 +69,7 @@ function pluginRows(downloads, channel, locale, pluginLabel) {
         description: plugin.description,
         url: channel ? channel.url : plugin.url,
         kind: "plugin",
-        includedPlugins: [],
+        includedModules: [],
     }));
 }
 
@@ -92,14 +99,14 @@ function renderRow(row, messages, version) {
     main.appendChild(text);
     item.appendChild(main);
 
-    if (row.includedPlugins.length > 0) {
+    if (row.includedModules.length > 0) {
         const block = createElement("div", "app-plugins-block");
         block.appendChild(createElement("p", "app-plugins-title", messages.includedPackages));
         const list = createElement("ul", "app-plugins");
-        for (const plugin of row.includedPlugins) {
+        for (const module of row.includedModules) {
             const entry = createElement("li");
-            entry.appendChild(createElement("span", "", plugin.label));
-            entry.appendChild(createElement("span", "app-plugin-version", plugin.version));
+            entry.appendChild(createElement("span", "", module.label));
+            entry.appendChild(createElement("span", "app-plugin-version", module.version));
             list.appendChild(entry);
         }
         block.appendChild(list);
@@ -136,7 +143,7 @@ export function renderDownloadGroups(container, { downloads, locale, messages, c
         container.appendChild(code);
     }
 
-    const apps = appRows(downloads, channel, locale, pluginLabel);
+    const apps = appRows(downloads, channel, locale, pluginLabel, messages.appShell);
     const plugins = pluginRows(downloads, channel, locale, pluginLabel);
     if (apps.length === 0 && plugins.length === 0) {
         container.appendChild(createElement("p", "empty-state", messages.empty));

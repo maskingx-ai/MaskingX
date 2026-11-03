@@ -1,7 +1,7 @@
 const PLUGIN_LABELS = {
-    "masking-core": { zh: "脱敏引擎包", en: "Masking Pack" },
-    "mineru-core": { zh: "OCR 核心包", en: "OCR Core" },
-    "mineru-models": { zh: "OCR 模型包", en: "OCR Model" },
+    "masking-core": { zh: "脱敏引擎包", en: "Masking engine pack", code: "Masking Pack" },
+    "mineru-core": { zh: "OCR 核心包", en: "OCR core package", code: "OCR Core" },
+    "mineru-models": { zh: "OCR 模型包", en: "OCR model package", code: "OCR Model" },
 };
 
 const MESSAGES = {
@@ -12,6 +12,7 @@ const MESSAGES = {
         appGroup: "应用",
         pluginGroup: "插件",
         includedPackages: "内置这些包",
+        appShell: "主应用程序 (App Shell)",
         download: "下载",
         unavailable: "暂未提供",
         accessCode: "提取码",
@@ -31,6 +32,7 @@ const MESSAGES = {
         appGroup: "Applications",
         pluginGroup: "Plugins",
         includedPackages: "Included packages",
+        appShell: "Main application (App Shell)",
         download: "Download",
         unavailable: "Not available",
         accessCode: "Access code",
@@ -54,5 +56,5 @@ export function pluginLabel(id, fallback, locale) {
     if (!label) {
         return fallback || id;
     }
-    return locale === "zh" ? `${label.zh} (${label.en})` : `${label.en} (${label.zh})`;
+    return locale === "zh" ? `${label.zh} (${label.code})` : `${label.en} (${label.code})`;
 }
