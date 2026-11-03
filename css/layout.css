@@ -116,6 +116,7 @@
 
 .download-description-block {
     min-width: 0;
+    padding-right: 56px;
 }
 
 .download-description-label {
@@ -156,8 +157,8 @@
 
 .app-plugins li {
     display: flex;
-    justify-content: space-between;
-    gap: 12px;
+    justify-content: flex-start;
+    gap: 10px;
 }
 
 .app-plugin-version {
