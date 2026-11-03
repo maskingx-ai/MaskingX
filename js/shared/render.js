@@ -2,6 +2,12 @@ function displayVersion(version) {
     return version.replace(/-b\d+$/i, "");
 }
 
+function descriptionFor(value, locale) {
+    if (!value) return "";
+    if (typeof value === "string") return value;
+    return value[locale] || "";
+}
+
 function createElement(tag, className, text) {
     const element = document.createElement(tag);
     if (className) {
@@ -47,7 +53,7 @@ function appRows(downloads, channel, locale, pluginLabel, appShellLabel) {
         key: app.id,
         name: app.name,
         version: displayVersion(app.version),
-        description: app.description,
+        description: descriptionFor(app.description, locale),
         url: channel ? channel.url : app.url,
         kind: "app",
         includedModules: [
@@ -70,7 +76,7 @@ function pluginRows(downloads, channel, locale, pluginLabel) {
         key: plugin.id,
         name: pluginLabel(plugin.id, plugin.name, locale),
         version: displayVersion(plugin.version),
-        description: plugin.description,
+        description: descriptionFor(plugin.description, locale),
         url: channel ? channel.url : plugin.url,
         kind: "plugin",
         includedModules: [],
@@ -89,6 +95,7 @@ function renderDownloadAction(row, messages) {
 
 function renderRow(row, messages, version) {
     const item = createElement("li", "download-row");
+    const left = createElement("div", "download-left");
     const main = createElement("div", "download-main");
     main.appendChild(row.kind === "app" ? appIcon(version) : pluginIcon());
 
@@ -97,15 +104,12 @@ function renderRow(row, messages, version) {
     title.appendChild(createElement("span", "download-name", row.name));
     title.appendChild(createElement("span", "download-version", row.version));
     text.appendChild(title);
-    if (row.description) {
-        text.appendChild(createElement("p", "download-description", row.description));
-    }
     main.appendChild(text);
-    item.appendChild(main);
+    left.appendChild(main);
 
     if (row.includedModules.length > 0) {
         const block = createElement("div", "app-plugins-block");
-        block.appendChild(createElement("p", "app-plugins-title", messages.includedPackages));
+        block.appendChild(createElement("p", "app-plugins-title", messages.includedPlugins));
         const list = createElement("ul", "app-plugins");
         for (const module of row.includedModules) {
             const entry = createElement("li");
@@ -114,8 +118,16 @@ function renderRow(row, messages, version) {
             list.appendChild(entry);
         }
         block.appendChild(list);
-        item.appendChild(block);
+        left.appendChild(block);
     }
+    item.appendChild(left);
+
+    const description = createElement("div", "download-description-block");
+    if (row.description) {
+        description.appendChild(createElement("p", "download-description-label", messages.description));
+        description.appendChild(createElement("p", "download-description", row.description));
+    }
+    item.appendChild(description);
 
     item.appendChild(renderDownloadAction(row, messages));
     return item;

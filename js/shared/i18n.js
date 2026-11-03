@@ -1,7 +1,7 @@
 const PLUGIN_LABELS = {
-    "masking-core": { zh: "脱敏引擎包", en: "Masking engine pack", code: "Masking Pack" },
-    "mineru-core": { zh: "OCR 核心包", en: "OCR core package", code: "OCR Core" },
-    "mineru-models": { zh: "OCR 模型包", en: "OCR model package", code: "OCR Model" },
+    "masking-core": { zh: "脱敏引擎包", en: "Masking engine pack" },
+    "mineru-core": { zh: "OCR 核心包", en: "OCR core package" },
+    "mineru-models": { zh: "OCR 模型包", en: "OCR model package" },
 };
 
 const MESSAGES = {
@@ -11,8 +11,9 @@ const MESSAGES = {
         source: "GitHub 仓库",
         appGroup: "应用",
         pluginGroup: "插件",
-        includedPackages: "内置这些包",
-        appShell: "主应用程序 (App Shell)",
+        includedPlugins: "包含插件",
+        description: "描述",
+        appShell: "主应用程序",
         download: "下载",
         unavailable: "暂未提供",
         accessCode: "提取码",
@@ -31,8 +32,9 @@ const MESSAGES = {
         source: "GitHub repository",
         appGroup: "Applications",
         pluginGroup: "Plugins",
-        includedPackages: "Included packages",
-        appShell: "Main application (App Shell)",
+        includedPlugins: "Included plugins",
+        description: "Description",
+        appShell: "Main application",
         download: "Download",
         unavailable: "Not available",
         accessCode: "Access code",
@@ -56,5 +58,5 @@ export function pluginLabel(id, fallback, locale) {
     if (!label) {
         return fallback || id;
     }
-    return locale === "zh" ? `${label.zh} (${label.code})` : `${label.en} (${label.code})`;
+    return label[locale] || label.en;
 }
