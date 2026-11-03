@@ -1,6 +1,20 @@
 # MaskingX
 
-MaskingX is a Windows desktop application for fully offline document masking. Document parsing, OCR, masking, and restoration all run locally; original files are never uploaded to a server.
+MaskingX is a Windows desktop application for secure, local-first document masking. Document parsing, OCR, masking, and restoration run entirely on your machine. Original files are never uploaded, and document processing does not require a network connection.
+
+## Security and privacy model
+
+MaskingX is designed for sensitive documents that must remain inside the local environment.
+
+- Data safety: document content stays within the local trust boundary and is not sent to a remote service.
+- Local-first processing: parsing, OCR, masking, and restoration run on the local machine.
+- No-network operation: document processing does not depend on an internet connection or a remote API.
+- No document uploads: original documents and extracted content are not uploaded to a server.
+- Offline plugin installation: application and plugin packs can be installed without a network connection.
+- Local data control: input files and processed outputs remain on paths controlled by the user.
+- No cloud dependency: MaskingX does not require a cloud document-processing service.
+
+For sensitive work, obtain packages from the official download page and apply your organization's local access-control and data-handling policies to input and output files.
 
 ## Use cases
 
@@ -36,13 +50,6 @@ MaskingX consists of an application package and plugin packs:
 - OCR Model: local models required for OCR
 
 Choose the application package and plugin packs that match the version shown on the download page.
-
-## Privacy and offline operation
-
-- Document parsing, OCR, masking, and restoration run locally
-- Original files are not uploaded
-- Plugin packs can be installed offline
-- No cloud document-processing service is required
 
 ## System requirements
 
