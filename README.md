@@ -1,58 +1,58 @@
 # MaskingX
 
-MaskingX 是一款面向 Windows 的本地离线文档脱敏工具。文档解析、OCR 识别、脱敏处理和结果还原都在本机完成，原始文件不需要上传到任何服务器。
+MaskingX is a Windows desktop application for fully offline document masking. Document parsing, OCR, masking, and restoration all run locally; original files are never uploaded to a server.
 
-## 适用场景
+## Use cases
 
-- 需要在离线或受限网络环境中处理敏感文档
-- 需要对文档中的个人信息、业务信息进行脱敏
-- 需要保留结果还原能力，便于后续核对或恢复
-- 需要批量处理多个文档，并查看每个文件的处理状态
+- Process sensitive documents in offline or restricted-network environments
+- Mask personal or business information in documents
+- Keep restoration capability for later verification or recovery
+- Process multiple documents in batches and track per-file progress
 
-## 主要能力
+## Key capabilities
 
-- 文档解析：将文档内容解析为可处理的本地结果
-- OCR 识别：通过本地 OCR 插件识别扫描件或图片中的文字
-- 脱敏处理：对识别出的敏感内容执行脱敏
-- 结果还原：对已处理结果进行还原
-- 批量任务：支持添加多个文件并查看逐文件进度
-- 插件化：应用包和插件包独立版本，按组合使用
+- Document parsing: parse document content into local, processable results
+- OCR: recognize text in scanned documents or images with local OCR plugins
+- Masking: mask identified sensitive content
+- Restoration: restore processed results
+- Batch tasks: add multiple files and track per-file progress
+- Plugin-based packaging: application and plugin packs have independent versions and are used in combinations
 
-## 下载
+## Download
 
-请通过官方下载页获取应用和插件：
+Get the application and plugins from the official download page:
 
 https://maskingx-ai.github.io/MaskingX/
 
-下载页提供 GitHub、QQ群、飞书云盘、百度网盘四个渠道，可根据网络情况选择。
+The download page provides four channels: GitHub, QQ Group, Feishu Drive, and Baidu Netdisk. Choose the channel that works best for your network.
 
-## 下载内容
+## Download contents
 
-MaskingX 由应用包和插件包组成：
+MaskingX consists of an application package and plugin packs:
 
-- 应用包：MaskingX 主程序
-- 脱敏引擎包 (Masking Pack)：文档脱敏核心能力
-- OCR 核心包 (OCR Core)：文档解析与 OCR 核心能力
-- OCR 模型包 (OCR Model)：OCR 所需的本地模型
+- Application package: the MaskingX desktop application
+- Masking Pack: core document masking capability
+- OCR Core: document parsing and OCR core capability
+- OCR Model: local models required for OCR
 
-请按照下载页中的版本说明选择匹配的应用包和插件包。
+Choose the application package and plugin packs that match the version shown on the download page.
 
-## 隐私与离线
+## Privacy and offline operation
 
-- 文档解析、OCR、脱敏和还原在本机完成
-- 原始文件不上传
-- 插件包可离线安装
-- 不依赖云端文档处理服务
+- Document parsing, OCR, masking, and restoration run locally
+- Original files are not uploaded
+- Plugin packs can be installed offline
+- No cloud document-processing service is required
 
-## 系统要求
+## System requirements
 
 - Windows x64
-- 根据所安装的应用包和插件组合预留足够的磁盘空间
+- Reserve enough disk space for the application and plugin combination you install
 
-## 仓库说明
+## Repository
 
-本仓库只存放 MaskingX 下载页和产品介绍，不包含产品源码。产品源码、内部构建脚本和发布流程不在本仓库中。
+This repository contains only the MaskingX download page and product information. It does not contain the product source code, internal build scripts, or release workflow.
 
-## 许可证
+## License
 
 MIT License
