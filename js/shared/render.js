@@ -1,3 +1,7 @@
+function displayVersion(version) {
+    return version.replace(/-b\d+$/i, "");
+}
+
 function createElement(tag, className, text) {
     const element = document.createElement(tag);
     if (className) {
@@ -42,7 +46,7 @@ function appRows(downloads, channel, locale, pluginLabel, appShellLabel) {
     return downloads.apps.map((app) => ({
         key: app.id,
         name: app.name,
-        version: app.version,
+        version: displayVersion(app.version),
         description: app.description,
         url: channel ? channel.url : app.url,
         kind: "app",
@@ -50,12 +54,12 @@ function appRows(downloads, channel, locale, pluginLabel, appShellLabel) {
             {
                 key: `${app.id}:app-shell`,
                 label: appShellLabel,
-                version: app.version,
+                version: displayVersion(app.version),
             },
             ...(app.plugins || []).map((plugin) => ({
                 key: `${plugin.id}:${plugin.version}`,
                 label: pluginLabel(plugin.id, plugin.id, locale),
-                version: plugin.version,
+                version: displayVersion(plugin.version),
             })),
         ],
     }));
@@ -65,7 +69,7 @@ function pluginRows(downloads, channel, locale, pluginLabel) {
     return downloads.plugins.map((plugin) => ({
         key: plugin.id,
         name: pluginLabel(plugin.id, plugin.name, locale),
-        version: plugin.version,
+        version: displayVersion(plugin.version),
         description: plugin.description,
         url: channel ? channel.url : plugin.url,
         kind: "plugin",
