@@ -29,6 +29,16 @@ export const downloads = {
     ],
     plugins: [
         {
+            id: "masking-core",
+            name: "Masking Core",
+            version: "1.0.0-b48",
+            description: {
+                zh: "提供文档脱敏和还原的核心能力。",
+                en: "Provides the core capabilities for document masking and restoration.",
+            },
+            url: "https://github.com/maskingx-ai/MaskingX/releases/download/v0.1.0/masking-core-1.0.0-b48.mxpack",
+        },
+        {
             id: "mineru-core",
             name: "MinerU Core",
             version: "4.0.11-b34",
