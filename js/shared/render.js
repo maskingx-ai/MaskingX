@@ -2,6 +2,15 @@ function displayVersion(version) {
     return version.replace(/-b\d+$/i, "");
 }
 
+function versionFromUrl(url) {
+    const fileName = String(url).split("/").pop().split(/[?#]/)[0];
+    const match = fileName.match(/(\d+\.\d+\.\d+(?:-b\d+)?)/);
+    if (!match) {
+        throw new Error(`cannot read version from file path: ${url}`);
+    }
+    return match[1];
+}
+
 function descriptionFor(value, locale) {
     if (!value) return "";
     if (typeof value === "string") return value;
@@ -48,34 +57,44 @@ function pluginIcon() {
     return wrapper;
 }
 
-function appRows(downloads, channel, locale, pluginLabel, appShellLabel) {
-    return downloads.apps.map((app) => ({
-        key: app.id,
-        name: app.name,
-        version: displayVersion(app.version),
-        description: descriptionFor(app.description, locale),
-        url: channel ? channel.url : app.url,
-        kind: "app",
-        includedModules: [
-            {
-                key: `${app.id}:app-shell`,
-                label: appShellLabel,
-                version: displayVersion(app.version),
-            },
-            ...(app.plugins || []).map((plugin) => ({
-                key: `${plugin.id}:${plugin.version}`,
-                label: pluginLabel(plugin.id, plugin.id, locale),
-                version: displayVersion(plugin.version),
-            })),
-        ],
-    }));
+function appRows(downloads, channel, locale, pluginLabel, appShellLabel, pluginById) {
+    return downloads.apps.map((app) => {
+        const appVersion = versionFromUrl(app.url);
+        return {
+            key: app.id,
+            name: app.name,
+            version: displayVersion(appVersion),
+            description: descriptionFor(app.description, locale),
+            url: channel ? channel.url : app.url,
+            kind: "app",
+            includedModules: [
+                {
+                    key: `${app.id}:app-shell`,
+                    label: appShellLabel,
+                    version: displayVersion(appVersion),
+                },
+                ...(app.plugins || []).map((pluginRef) => {
+                    const plugin = pluginById.get(pluginRef.id);
+                    if (!plugin) {
+                        throw new Error(`app ${app.id} references unknown plugin: ${pluginRef.id}`);
+                    }
+                    const pluginVersion = versionFromUrl(plugin.url);
+                    return {
+                        key: `${pluginRef.id}:${pluginVersion}`,
+                        label: pluginLabel(pluginRef.id, plugin.name, locale),
+                        version: displayVersion(pluginVersion),
+                    };
+                }),
+            ],
+        };
+    });
 }
 
 function pluginRows(downloads, channel, locale, pluginLabel) {
     return downloads.plugins.map((plugin) => ({
         key: plugin.id,
         name: pluginLabel(plugin.id, plugin.name, locale),
-        version: displayVersion(plugin.version),
+        version: displayVersion(versionFromUrl(plugin.url)),
         description: descriptionFor(plugin.description, locale),
         url: channel ? channel.url : plugin.url,
         kind: "plugin",
@@ -159,7 +178,8 @@ export function renderDownloadGroups(container, { downloads, locale, messages, c
         container.appendChild(code);
     }
 
-    const apps = appRows(downloads, channel, locale, pluginLabel, messages.appShell);
+    const pluginById = new Map(downloads.plugins.map((plugin) => [plugin.id, plugin]));
+    const apps = appRows(downloads, channel, locale, pluginLabel, messages.appShell, pluginById);
     const plugins = pluginRows(downloads, channel, locale, pluginLabel);
     if (apps.length === 0 && plugins.length === 0) {
         container.appendChild(createElement("p", "empty-state", messages.empty));
