@@ -57,6 +57,9 @@ export const downloads = {
     channels: {
         qq: { url: "" },
         feishu: { url: "" },
-        baidu: { url: "", code: "" },
+        baidu: {
+            url: "https://pan.baidu.com/s/1SQPjkYBvx0R3Jh5ghAw_5w?pwd=csyi",
+            code: "csyi",
+        },
     },
 };
