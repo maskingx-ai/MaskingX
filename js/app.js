@@ -4,7 +4,7 @@ if (!assetVersion) {
 }
 
 const viewRoot = document.querySelector("#view-root");
-const tabs = Array.from(document.querySelectorAll(".tab"));
+const tabs = Array.from(document.querySelectorAll(".tab:not(:disabled)"));
 const languageToggle = document.querySelector("#language-toggle");
 let locale = document.documentElement.lang.startsWith("zh") ? "zh" : "en";
 

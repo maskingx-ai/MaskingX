@@ -19,6 +19,16 @@
     color: var(--accent-strong);
 }
 
+.tab:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+}
+
+.tab:disabled:hover {
+    border-color: var(--border);
+    color: var(--muted);
+}
+
 .tab.active {
     background: var(--accent);
     border-color: var(--accent);
